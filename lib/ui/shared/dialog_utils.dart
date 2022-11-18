@@ -25,6 +25,25 @@ Future<bool?> showConfirmDialog(
   );
 }
 
+Future<bool?> showNextDialog(
+    BuildContext context, String message, String title, String routeName) {
+  return showDialog(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: Text(title),
+      content: Text(message),
+      actions: <Widget>[
+        TextButton(
+          child: const Text('Okey'),
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed(routeName);
+          },
+        ),
+      ],
+    ),
+  );
+}
+
 Future<void> showErrorDialog(
     BuildContext context, String message, String title) {
   return showDialog(

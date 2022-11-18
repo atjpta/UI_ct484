@@ -43,13 +43,23 @@ class _AuthCardState extends State<AuthCard> {
             );
       } else {
         // Sign user up
-        await context.read<AuthManager>().signup(
+        String response = await context.read<AuthManager>().signup(
               _authData['email']!,
               _authData['password']!,
             );
+        if (response == '200') {
+          setState(() {
+            showErrorDialog(
+                context, "Đăng kí thành công", 'Thông báo cực căng');
+            _authMode = AuthMode.login;
+          });
+        } else {
+          showErrorDialog(context, response, 'Thông báo cực căng');
+        }
       }
     } catch (error) {
-      showErrorDialog(context, "Lỗi đăng nhập", 'Thông báo cực căng');
+      showErrorDialog(
+          context, 'sai tài khoản or mật khẩu', 'Thông báo cực căng');
     }
 
     _isSubmitting.value = false;
@@ -152,9 +162,9 @@ class _AuthCardState extends State<AuthCard> {
       obscureText: true,
       validator: _authMode == AuthMode.signup
           ? (value) {
-              // if (value != _passwordController.text) {
-              //   return 'Xác nhận mật khẩu không trùng';
-              // }
+              if (value != _passwordController.text) {
+                return 'Xác nhận mật khẩu không trùng';
+              }
               return null;
             }
           : null,
@@ -180,7 +190,7 @@ class _AuthCardState extends State<AuthCard> {
 
   Widget _buildEmailField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: 'Email'),
+      decoration: const InputDecoration(labelText: 'Username'),
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         // if (value!.isEmpty || !value.contains('@')) {

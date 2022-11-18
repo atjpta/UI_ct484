@@ -24,11 +24,6 @@ class AuthService {
       String email, String password, String method) async {
     try {
       final url = Uri.parse('https://api-ct484.vercel.app/api/auth/$method');
-      final response2 =
-          await http.get(Uri.parse('https://api-ct484.vercel.app/api/users'));
-
-      final responseJson2 = json.decode(response2.body);
-
       var response = await http.post(url,
           headers: <String, String>{
             "Content-Type": "application/json",
@@ -39,19 +34,9 @@ class AuthService {
           }));
 
       final responseJson = json.decode(response.body);
-      print(responseJson);
-
       final authToken = _fromJson(responseJson);
       // _saveAuthToken(authToken);
 
-      const url3 = 'https://api-ct484.vercel.app/api/users/test/user';
-      var response3 = await http.get(
-        Uri.parse(url3),
-        headers: <String, String>{
-          HttpHeaders.authorizationHeader: authToken.token,
-          "Content-Type": "application/json",
-        },
-      );
       return authToken;
     } catch (error) {
       print(" >> error: " + error.toString());
@@ -59,8 +44,28 @@ class AuthService {
     }
   }
 
-  Future<AuthToken> signup(String email, String password) {
-    return _authenticate(email, password, 'signup');
+  Future<String> signup(String email, String password) async {
+    try {
+      final url = Uri.parse('https://api-ct484.vercel.app/api/auth/signup');
+      var response = await http.post(url,
+          headers: <String, String>{
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode({
+            "username": email,
+            "password": password,
+          }));
+      final responseJson = json.decode(response.body);
+      // print(responseJson);
+      if (response.statusCode == 200) {
+        return response.statusCode.toString();
+      } else {
+        return responseJson['message'];
+      }
+    } catch (error) {
+      print(" >> error: " + error.toString());
+      rethrow;
+    }
   }
 
   Future<AuthToken> login(String email, String password) {
