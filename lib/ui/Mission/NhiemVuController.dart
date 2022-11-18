@@ -37,10 +37,16 @@ class NhiemVuControler with ChangeNotifier {
   }
 
   Future<void> fetchNhiemVuFinish() async {
+    nhiemVus.clear();
     nhiemVuIncomplete.clear();
     nhiemVuCompleted.clear();
     nhiemVus = await _nhiemVuService.getListNhiemVuFinish();
 
+    await SliptNhiemVu();
+    notifyListeners();
+  }
+
+  Future<void> SliptNhiemVu() async {
     for (int i = 0; i < nhiemVus.length; i++) {
       if (nhiemVus[i].completed == '0') {
         nhiemVuIncomplete.add(nhiemVus[i]);
@@ -48,7 +54,6 @@ class NhiemVuControler with ChangeNotifier {
         nhiemVuCompleted.add(nhiemVus[i]);
       }
     }
-    notifyListeners();
   }
 
   Future<void> updateNhiemVu(NhiemVu nhiemVu) async {

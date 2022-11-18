@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '../models/http_exception.dart';
 import '../models/auth_token.dart';
 
 class AuthService {
@@ -41,9 +40,6 @@ class AuthService {
 
       final responseJson = json.decode(response.body);
       print(responseJson);
-      if (responseJson['error'] != null) {
-        throw HttpException.firebase(responseJson['error']['message']);
-      }
 
       final authToken = _fromJson(responseJson);
       // _saveAuthToken(authToken);

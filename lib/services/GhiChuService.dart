@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../models/GhiChu.dart';
-import '../models/http_exception.dart';
 import '../models/auth_token.dart';
 
 class GhiChuService {

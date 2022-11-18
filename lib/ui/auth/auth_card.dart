@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/http_exception.dart';
 import '../shared/dialog_utils.dart';
 
 import 'auth_manager.dart';
@@ -50,10 +49,7 @@ class _AuthCardState extends State<AuthCard> {
             );
       }
     } catch (error) {
-      showErrorDialog(
-          context,
-          (error is HttpException) ? error.toString() : 'Authentication failed',
-          'Thông báo cực căng');
+      showErrorDialog(context, "Lỗi đăng nhập", 'Thông báo cực căng');
     }
 
     _isSubmitting.value = false;
