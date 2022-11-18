@@ -30,7 +30,7 @@ class _GhiChuScreenState extends State<GhiChuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Diary'),
+        title: const Text('Ghi chú của bạn'),
       ),
       drawer: const AppDrawer(),
       body: FutureBuilder(
@@ -56,16 +56,17 @@ class _GhiChuScreenState extends State<GhiChuScreen> {
                           child: Container(
                             margin: const EdgeInsets.all(8),
                             decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomLeft,
-                                  colors: [
-                                    Colors.blue,
-                                    Color.fromARGB(255, 255, 255, 255),
-                                  ],
-                                )),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              gradient: LinearGradient(
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                                colors: [
+                                  Colors.blue,
+                                  Color.fromARGB(255, 255, 255, 255),
+                                ],
+                              ),
+                            ),
                             child: ListTile(
                                 title: Text(
                                   nhatKyControler.nhatKys[i].title,

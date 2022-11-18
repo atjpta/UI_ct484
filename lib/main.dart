@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:myshop/models/NhiemVu.dart';
+import 'package:myshop/ui/Mission/NhiemVuAddScreen.dart';
+import 'package:myshop/ui/Mission/NhiemVuScreen.dart';
 import 'package:myshop/ui/NhatKy/GhiChuAddScreen.dart';
 import 'package:myshop/ui/NhatKy/GhiChuControler.dart';
 import 'ui/Mission/NhiemVuController.dart';
@@ -23,8 +26,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => AuthManager(),
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => NhiemVuControler(),
+        ChangeNotifierProxyProvider<AuthManager, NhiemVuControler>(
+          create: (context) => NhiemVuControler(),
+          update: (context, authManager, nhiemVuControler) {
+            nhiemVuControler!.authToken2 = authManager.authToken;
+            return nhiemVuControler;
+          },
         ),
         ChangeNotifierProxyProvider<AuthManager, GhiChuControler>(
           create: (context) => GhiChuControler(),
@@ -58,6 +65,8 @@ class MyApp extends StatelessWidget {
                 ),
           routes: {
             GhiChuAddScreen.routeName: (ctx) => const GhiChuAddScreen(),
+            NhiemVuScreen.routeName: (ctx) => const NhiemVuScreen(),
+            MissionAddScreen.routeName: (ctx) => const MissionAddScreen(),
           },
           onGenerateRoute: (settings) {
             if (settings.name == GhiChuDetailsScreen.routeName) {
@@ -68,6 +77,16 @@ class MyApp extends StatelessWidget {
                 },
               );
             }
+
+            if (settings.name == MissionDetailsScreen.routeName) {
+              final nhiemVu = settings.arguments as NhiemVu;
+              return MaterialPageRoute(
+                builder: (ctx) {
+                  return MissionDetailsScreen(nhiemVu);
+                },
+              );
+            }
+
             return null;
           },
         );

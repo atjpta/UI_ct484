@@ -1,38 +1,36 @@
 import 'package:flutter/material.dart';
 
-class DatePickerDemo extends StatefulWidget {
+class TimePickerDemo extends StatefulWidget {
   final String title;
 
-  DatePickerDemo(this.title) {}
+  TimePickerDemo(this.title) {}
   @override
-  _DatePickerDemoState createState() => _DatePickerDemoState(title);
-  DateTime selectedDate = DateTime.now();
+  _TimePickerDemoState createState() => _TimePickerDemoState(title);
+  TimeOfDay selectedTime = TimeOfDay.now();
 
-  void setDateSelected(DateTime dateTimeT) {
-    selectedDate = dateTimeT;
+  void setTime(TimeOfDay dateTimeT) {
+    selectedTime = dateTimeT;
     // print(selectedDate);
   }
 
-  DateTime getDateSelected() {
+  TimeOfDay getTimeSelected() {
     // print(selectedDate);
-    return selectedDate;
+    return selectedTime;
   }
 }
 
-class _DatePickerDemoState extends State<DatePickerDemo> {
+class _TimePickerDemoState extends State<TimePickerDemo> {
   String titleT;
-  _DatePickerDemoState(this.titleT);
+  _TimePickerDemoState(this.titleT);
   _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialDate: widget.selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
+      initialTime: TimeOfDay.now(),
     );
-    if (picked != null && picked != widget.selectedDate)
+    if (picked != null && picked != widget.selectedTime)
       setState(() {
-        widget.selectedDate = picked;
-        widget.getDateSelected();
+        widget.selectedTime = picked;
+        widget.getTimeSelected();
       });
   }
 
@@ -49,13 +47,17 @@ class _DatePickerDemoState extends State<DatePickerDemo> {
                   margin: const EdgeInsets.all(10.0),
                   child: Text(
                     this.titleT +
-                        "${widget.selectedDate.day}/${widget.selectedDate.month}/${widget.selectedDate.year}",
+                        '${widget.selectedTime.hour} : ${widget.selectedTime.minute}',
                     style: const TextStyle(fontSize: 16),
                   ),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.only(
+                  left: 5.0,
+                  right: 5.0,
+                ),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   gradient: LinearGradient(
@@ -70,7 +72,7 @@ class _DatePickerDemoState extends State<DatePickerDemo> {
                 child: TextButton(
                   onPressed: () => _selectDate(context),
                   child: const Text(
-                    'Chọn ngày',
+                    'Chọn giờ',
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
                   ),

@@ -4,7 +4,6 @@ import 'package:myshop/ui/NhatKy/GhiChuControler.dart';
 import '../../models/GhiChu.dart';
 import 'package:provider/provider.dart';
 import '../shared/dialog_utils.dart';
-import '../Mission/PickerDate.dart';
 
 final Map<String, String> _ghiChuData = {
   'id': '',
@@ -22,7 +21,6 @@ class GhiChuDetailsScreen extends StatefulWidget {
 }
 
 class _GhiChuDetailsScreenState extends State<GhiChuDetailsScreen> {
-  final DatePickerDemo datePickerDemo = DatePickerDemo();
   final GlobalKey<FormState> _formKey = GlobalKey();
   late GhiChuControler _ghiChuControler;
   @override
@@ -54,7 +52,6 @@ class _GhiChuDetailsScreenState extends State<GhiChuDetailsScreen> {
       ),
       body: ListView(
         children: [
-          datePickerDemo,
           Form(
             key: _formKey,
             child: Container(
@@ -113,8 +110,8 @@ class _GhiChuDetailsScreenState extends State<GhiChuDetailsScreen> {
   }
 
   Future<void> _update() async {
-    datePickerDemo
-        .setDateSelected(DateFormat('dd/MM/yyyy').parse('25/11/2022'));
+    // datePickerDemo
+    //     .setDateSelected(DateFormat('dd/MM/yyyy').parse('25/11/2022'));
     // print(DateFormat('dd/MM/yyyy').format(datePickerDemo.getDateSelected()));
     if (!_formKey.currentState!.validate()) {
       return;

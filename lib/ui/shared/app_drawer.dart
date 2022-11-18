@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../Mission/NhiemVuScreen.dart';
 
 import '../auth/auth_manager.dart';
 import '../NhatKy/GhiChuScreen.dart';
@@ -19,9 +20,18 @@ class AppDrawer extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.library_books),
-            title: const Text('Nhật ký'),
+            title: const Text('Ghi chú'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed('/');
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.library_books),
+            title: const Text('Nhiệm vụ'),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(NhiemVuScreen.routeName);
             },
           ),
           const Divider(),
